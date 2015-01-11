@@ -37,7 +37,7 @@ data <- read.csv(
 data$DateTime <- strptime(paste(data$Date, data$Time), format = "%d/%m/%Y %H:%M:%S")
 
 #################
-# Plot graphic 2
+# Plot graphic 3
 #################
 
 #Set correct locale for correct x marks (Thu/Fri/Sat)
@@ -45,20 +45,36 @@ oldTimeLocale <- Sys.getlocale("LC_TIME")
 Sys.setlocale("LC_TIME", "English")
 
 # OPen png device
-png(filename="plot2.png", width=480, height=480, units="px")
+png(filename="plot3.png", width=480, height=480, units="px")
 
 # Draw a plot
 plot(
     data$DateTime,
-    data$Global_active_power,
+    data$Sub_metering_1,
     type="l",
+    col="black",
     main="",
     xlab="",
-    ylab="Global Active Power (kilowatts)")
+    ylab="Energy sub metering")
+
+lines(
+    data$DateTime,
+    data$Sub_metering_2,
+    col="red")
+
+lines(
+    data$DateTime,
+    data$Sub_metering_3,
+    col="blue")
+
+legend(
+    "topright",
+    legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
+    col = c("black", "red", "blue"),
+    lty="solid")
 
 # Close device
 dev.off()
 
 # Return previous locale
 Sys.setlocale("LC_TIME", oldTimeLocale)
-
